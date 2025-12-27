@@ -1,3 +1,26 @@
+// 🔹 Helper function – MUST be at top
+function splitTextByLength(text, maxLength = 1000) {
+    let parts = [];
+    let current = "";
+
+    text.split(" ").forEach(word => {
+        if ((current + word).length <= maxLength) {
+            current += word + " ";
+        } else {
+            parts.push(current.trim());
+            current = word + " ";
+        }
+    });
+
+    if (current.trim()) parts.push(current.trim());
+    return parts;
+}
+
+// saved recipe
+
+
+
+
 const recipeContainer = document.getElementById("recipeContainer");
 const sidebar = document.getElementById("sidebar");
 
@@ -38,6 +61,7 @@ const searchInput = document.getElementById("searchInput");
 
 // --------------------------------------------------------------------------
 
+
 // -----------------------------------------------------------------------------
 
 const searchInputs = document.getElementById("searchInput");
@@ -65,6 +89,34 @@ async function searchRecipe() {
     displayRecipes(data.meals);
 }
 
+const searchInputss = document.getElementById("searchInput");
+
+searchInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // stop form reload
+        searchRecipe();
+    }
+});
+
+// automatic dissappearing of Recipe
+
+const searchInputk = document.getElementById("searchInput");
+const recipeContainers = document.getElementById("recipeContainer");
+const infoTexts = document.getElementById("InfoText");
+
+searchInput.addEventListener("input", () => {
+    const value = searchInput.value.trim();
+
+    if (value === "") {
+        // 🔥 Clear recipes automatically
+        recipeContainer.innerHTML = "";
+
+        // Show info text again
+        infoText.style.display = "block";
+    }
+});
+
+
 // Random recipe
 async function randomRecipe() {
     const res = await fetch(
@@ -79,7 +131,7 @@ function displayRecipes(meals) {
     recipeContainer.innerHTML = "";
 
     if (!meals) {
-        recipeContainer.innerHTML = "<p style='text-align:center; font-weight: 800; font-family: \"Poppins\", sans-serif; color: red;'>No recipe found.</p>";
+        recipeContainer.innerHTML = "<p style='text-align:center; font-weight: bold; font-family: \"Poppins\", sans-serif; color: red;'>No recipe found.</p>";
         return;
     }
 
@@ -119,6 +171,31 @@ function closeModal() {
     document.getElementById("modalVideo").src = "";
 }
 
+// Save recipe (placeholder function)
+function saveRecipe() {
+    alert("Recipe saved!");
+}
+
+// Line break for instructions
+function showInstructionsAsBullets(instructionsText) {
+    const list = document.getElementById("instructionList");
+    list.innerHTML = "";
+
+    // Split by sentence endings
+    const steps = instructionsText
+        .replace(/\n/g, " ")
+        .split(/\. |\.\n|। |! |\? /)
+        .filter(step => step.trim() !== "");
+
+    steps.forEach((step, index) => {
+        const li = document.createElement("li");
+        li.textContent = `Step ${index + 1}: ${step.trim()}.`;
+        list.appendChild(li);
+    });
+}
+
+
+
 // Language toggle
 function setLanguage(lang) {
     if (lang === "en") {
@@ -135,7 +212,3 @@ function setLanguage(lang) {
         
   }
 }
-   
-
-
-
