@@ -18,13 +18,13 @@
       rel="stylesheet"
     />
   </head>
-  <body style="background-color:darksalmon;">
+  <body>
     <!-- Theme Toggle Button -->
     <div class="theme-toggle" onclick="toggleTheme()"></div>
 
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-      <h3>Menu</h3>
+      <h3 id="menu">Menu</h3>
       <a class="home" href="#home">Home</a>
       <a href="#">Saved Recipe</a>
       <a href="#">Theme</a>
@@ -36,7 +36,7 @@
     <div class="container">
       <!-- Header -->
       <header>
-        <h1><span class="Recipe">Recipe </span> Finder</h1>
+        <h1 id="finder"><span class="Recipe">Recipe </span> Finder</h1>
         <div class="hamburger" onclick="toggleMenu()">☰</div>
       </header>
 
@@ -48,6 +48,7 @@
             id="searchInput"
             class="search-input"
             placeholder="Search recipe..."
+            autocomplete="off"
           />
           <span id="clearBtn">&times;</span>
           <button class="search-btn" onclick="searchRecipe()">Search</button>
@@ -60,26 +61,39 @@
 
       <!-- Recipe Results -->
       <div class="recipe-container" id="recipeContainer"></div>
+      <!-- Pagination -->
+     
     </div>
 
     <!-- Recipe Details Modal -->
     <div class="modal" id="recipeModal">
       <div class="modal-content">
+        <button id="saveRecipeBtn" onclick="saveRecipe()"><img id="saved" src="bookmark.png" alt="Save Recipe"></button>
         <span class="close" onclick="closeModal()">×</span>
+
+        <!-- <div id="instructionSection"> -->
+        <!-- <ul id="instructionList"></ul>
+        </div> -->
 
         <h2 id="modalTitle"></h2>
         <img id="modalImage" />
 
         <div class="lang-buttons">
+          <!--  -->
+          <div id="instructionSection"> 
+          <ul id="instructionList"></ul>
+          <!-- // Moved inside modal content // -->
           <button onclick="setLanguage('en')">English</button>
-          <button onclick="setLanguage('ta')">தமிழ்</button>
+          <!-- <button onclick="setLanguage('ta')">தமிழ்</button> -->
         </div>
+
 
         <p id="modalInstructions"></p>
 
         <iframe id="modalVideo" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
+  </div>
 
     <script src="recipe.js"></script>
   </body>
